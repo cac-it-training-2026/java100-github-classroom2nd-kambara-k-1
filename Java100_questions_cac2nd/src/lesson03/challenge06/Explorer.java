@@ -79,27 +79,50 @@ import java.io.InputStreamReader;
 
 public class Explorer {
 
-    public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException {
 
-        System.out.println("隊長：");
-        System.out.println("トラ発見！\n");
+		System.out.println("隊長：");
+		System.out.println("トラ発見！\n");
 
-        int deepSleepTime = (int) (Math.random() * 10 % 3) + 1;
-        int goTime = 0;
+		int deepSleepTime = (int) (Math.random() * 10 % 3) + 1;
+		int goTime = 0;
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
+		//ここにfor文、if文を利用した処理を記述
+		//★始まりは1時間経過時、1時間ずつ経過し3時間経つと自動で進むため「i <= 3」
+		for (int i = 1; i <= 3; i++) {
+			System.out.println("隊長：");
+			System.out.println(i + "時間経過。");
 
-        //ここにfor文、if文を利用した処理を記述
+			//★3時間経過していない間は通り抜けるか問う
+			if (i != 3) {
+				System.out.print("今通り抜けますか？（はい… 1 : いいえ… その他のキー）＞");
+				String numstr = br.readLine();
+				int num = Integer.parseInt(numstr);
+				//★通り抜けると判断した(1を選択した)場合の処理
+				if (num == 1) {
+					goTime = i;
+					//★通り抜けるため繰り返し処理を終了
+					break;
+				}
+				//★3時間が経過した((i != 3)でなくなった)場合の処理
+			} else {
+				goTime = i;
+				System.out.println("隊長：");
+				System.out.println(i + "時間経過。");
+				System.out.println("もう後がないんで通り抜けますよ。");
+			}
+		}
 
+		if (deepSleepTime == goTime) {
+			System.out.println("\n隊長：");
+			System.out.println("成功！トラはぐっすり寝ています。");
 
-        if (deepSleepTime == goTime) {
-            System.out.println("\n隊長：");
-            System.out.println("成功！トラはぐっすり寝ています。");
-        } else {
-            System.out.println("\n隊長：");
-            System.out.println("しまったトラがまだ起きてた！");
-        }
+		} else {
+			System.out.println("\n隊長：");
+			System.out.println("しまったトラがまだ起きてた！");
+		}
+	}
 
-    }
 }

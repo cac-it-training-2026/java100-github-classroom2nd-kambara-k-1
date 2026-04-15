@@ -59,15 +59,36 @@ public class Explorer {
 		int lithograph = 0;
 		int i = 0;
 
-
 		//ここにdo～while文、if文を利用した処理を記述
+		do {
+			//★Math.random()は0.0以上で1.0より小さいdouble型の乱数を返すため、		 
+			//★Math.random()の結果を10倍すれば0.0以上で10.0より小さい数値に変換可能。
+			lithograph = (int) (Math.random() * 10);
 
+			if (lithograph == 3) {
+				System.out.println("隊長：");
+				System.out.println("やったー！3が出たよ！");
+				break;
+				//★間違い箇所（elseでも大丈夫だが、本来の意味では複数条件となるため
+				//　　　　　　　else if(i != 6)の方が意味は正しい。）
+			} else {
+				System.out.println("隊長：");
+				System.out.println(lithograph + "だった...");
+				//★間違い箇所（(i - 1)にしてしまうと、-1時間経過することとなる）
+				//（さらに、i++はif文の後に記述する必要がある）
+				System.out.println("1時間待つよ (" + i + "時間経過)\n");
+			}
+			//★間違い箇所（i++をif文の前に記述すると、6時間経過してもさらに1時間待つ
+			//　　　　　　　ように表示されてしまう。6時間で全滅する必要があるため。）
+			i++;
+
+		} while (i <= 6);
 
 		if (lithograph == 3) {
 			System.out.println("洞窟の入り口が開きました。");
 		} else {
 			System.out.println("隊長：");
-			System.out.println(lithograph + "だった...（" + (i - 1)+ "時間経過）");
+			System.out.println(lithograph + "だった...（" + (i - 1) + "時間経過）");
 			System.out.println("あの時サバ缶に手を付けていなければ...");
 			System.out.println("探検隊は全滅しました。");
 		}
