@@ -42,9 +42,15 @@ public class WarehouseManager {
 
 	public static void main(String[] args) {
 
-
 		//ここに配列の宣言および値の代入処理を記述する（for文）
+		int[] ABkousanArray = new int[5];
 
+		//★要素数まで値を代入するための繰り返し処理
+		for (int i = 0; i < ABkousanArray.length; i++) {
+			//★間違い箇所（配列に要素を代入するが、i番目に1～5のうち何の値が
+			//　　　　　　　入るかはランダム。ランダム処理が必要。）
+			ABkousanArray[i] = (int) (Math.random() * 10) % 5 + 1;
+		}
 
 		System.out.println("E主任：");
 		System.out.println("AB興産の荷物の検査結果を教えてください。\n");
@@ -52,11 +58,18 @@ public class WarehouseManager {
 		System.out.println("Yさん：");
 		System.out.println("はい、");
 
+		//★初期hitFlagをfalseに初期化し宣言
 		boolean hitFlag = false;
 
-
 		//ここに要素の確認および何袋目かの出力処理を記述する
-
+		//★荷物は全部で5袋あり、数値の5が入っている袋が何袋目なのかを調べる。
+		//★for文でローラーし、5と一致すればhitFlagをtrueに変更する処理をif文で行う
+		for (int i = 0; i < ABkousanArray.length; i++) {
+			if (ABkousanArray[i] == 5) {
+				hitFlag = true;
+				System.out.println((i + 1) + "袋目");
+			}
+		}
 
 		if (hitFlag) {
 			System.out.println("に入っていました。");

@@ -61,12 +61,36 @@ public class WarehouseManager {
 
 	public static void main(String[] args) {
 
-
 		//ここに必要な配列の宣言を記述する。
-
+		int[] MQArrayC = new int[5];
+		int[] MQArrayD = new int[5];
+		int[] MQArrayE = new int[5];
+		//★間違い箇所（1つの配列変数で複数種類かつ複数の値をまとめて保存するため
+		//				3行5列の2次元配列であるMQArrayAllを作る。
+		//				これにより15箱を一度に管理し、1/4の確率を適用可能となる。
+		//				ここでは、i番目の配列の、j番目の要素をMQArrayAllで管理。）
+		int[][] MQArrayAll = new int[3][5];
+		MQArrayAll[0] = MQArrayC;
+		MQArrayAll[1] = MQArrayD;
+		MQArrayAll[2] = MQArrayE;
 
 		//ここに配列に値を代入する処理を記述する。(要素はランダム)
+		//★MQArrayAllは2次元配列でありiとjで繰り返し処理を行う
+		for (int i = 0; i < MQArrayAll.length; i++) {
+			for (int j = 0; j < MQArrayAll[0].length; j++) {
+				//★間違い箇所（空き箱の確率を1/4にするロジックもMath.random()を
+				//				用いる。0～3の4つの値をランダムで出力し、その中で
+				//				0となった場合に空き箱とする。つまり確率は1/4。）
+				int rand = (int) (Math.random() * 10) % 4;
+				if (rand == 0) {
+					MQArrayAll[i][j] = 0;
+					//★0でない(空き箱)の時は、ランダムで1～10の値を入れる
+				} else {
+					MQArrayAll[i][j] = (int) (Math.random() * 10) % 10 + 1;
+				}
+			}
 
+		}
 
 		System.out.println("E主任：");
 		System.out.println("MQ運送から預かった荷物の確認をお願いします。\n");
@@ -76,21 +100,33 @@ public class WarehouseManager {
 
 		System.out.print("C...");
 
-
 		//ここに配列Cの要素をすべて出力する処理を記述する。
-
+		for (int i = 0; i < MQArrayC.length; i++) {
+			System.out.print(MQArrayC[i]);
+			if (i != MQArrayC.length - 1) {
+				System.out.print(",");
+			}
+		}
 
 		System.out.print("\n\nD...");
 
-
 		//ここに配列Dの要素をすべて出力する処理を記述する。
-
+		for (int i = 0; i < MQArrayD.length; i++) {
+			System.out.print(MQArrayD[i]);
+			if (i != MQArrayD.length - 1) {
+				System.out.print(",");
+			}
+		}
 
 		System.out.print("\n\nE...");
 
-
 		//ここに配列Eの要素をすべて出力する処理を記述する。
-
+		for (int i = 0; i < MQArrayE.length; i++) {
+			System.out.print(MQArrayE[i]);
+			if (i != MQArrayE.length - 1) {
+				System.out.print(",");
+			}
+		}
 
 		System.out.println("\n\nです。\n");
 

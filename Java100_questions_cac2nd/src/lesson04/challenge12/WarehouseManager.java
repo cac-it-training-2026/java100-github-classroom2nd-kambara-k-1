@@ -67,19 +67,28 @@ public class WarehouseManager {
 		boolean loopFlag;
 		do {
 			loopFlag = false;
+			//★入れる値(insertNum)を1～5でランダム決定
 			insertNum = (int) (Math.random() * 10) % 5 + 1;
 			for (int i = 0; i < wonderfulArray.length; i++) {
+				//★ふしコンのi番目の値がランダム数と同じならloopFlagをtrueにして抜ける
+				//　つまり、ここが重複チェック処理となっている。
+				//　初期はnullのためすり抜ける。
 				if (wonderfulArray[i] == insertNum) {
 					loopFlag = true;
 					break;
 				}
 			}
+			//★上記if文をすり抜けるとloopFlagはfalseのままなので、下記if文が実行される。(!は偽)
+			//　添字を0から1ずつ増やし、その添字番目にランダム数を埋め込む。
+			//　処理を進め、例えば1の次に1がランダム数となると上記if文で弾かれ、添字は増えない。
+			//　これにより1～5のランダム数が重複せずに埋め込まれる
 			if (!loopFlag) {
 				wonderfulArray[insertIndex] = insertNum;
 				insertIndex++;
 			}
 		} while (loopFlag || insertIndex < 5);
 
+		//★0にする箇所(添字)をランダムで決め、0にする処理
 		int clearIndex = (int) (Math.random() * 10) % 5;
 		wonderfulArray[clearIndex] = 0;
 
@@ -99,9 +108,24 @@ public class WarehouseManager {
 
 		System.out.println("\n\nでした。直してきます...\n");
 
-
 		//ここに適切な値の挿入処理を記述する
+		//【思考メモ】0が入っている添字をfor文とif文で割り出し、その添字の値を1～5までの値に繰り返し
+		//			　変更して重複チェックローラーする。
+		//★間違い箇所（重複チェックローラーではなく、targetIndexとtotalPointを用いてピンポイントで
+		//				修正する。どちらにせよ最終的には合計は15になることを利用し、最初のfor文で
+		//				0の位置以外の値を合計し15から引けば自動的に残りの値を割り出せる。）
+		int targetIndex = 0;
+		int totalPoint = 0;
 
+		for (int i = 0; i < wonderfulArray.length; i++) {
+			if (wonderfulArray[i] == 0) {
+				targetIndex = i;
+			} else {
+				totalPoint += wonderfulArray[i];
+			}
+		}
+
+		wonderfulArray[targetIndex] = (15 - totalPoint);
 
 		System.out.println("Yさん：");
 		System.out.println("直してきました。\n");

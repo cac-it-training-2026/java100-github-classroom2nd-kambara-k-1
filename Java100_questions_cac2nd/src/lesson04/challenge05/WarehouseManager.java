@@ -32,16 +32,36 @@ public class WarehouseManager {
 
 	public static void main(String[] args) {
 
-
 		//ここに配列の宣言を記述する
-
+		int[] ABkousanArray = new int[5];
 
 		int intputNum = 0;
 		boolean loopFlag = false;
 
-
 		//ここに重複チェックおよび値の代入処理を記述する
+		//★for文で代入処理を行いつつ重複チェックを行う。
+		for (int i = 0; i < ABkousanArray.length; i++) {
+			//★間違い箇所（do処理で最初にloopFlagをfalseに初期化、intputNumに1～5をランダム代入
+			//				1回目はdo-whileでinputNumが決定されるも、ABkousanArray[0]はnullのため
+			//　　　　　　　loopFlagはfalseのままとなり、ABkousanArrayにinputNumが代入される。
+			//				しかし、2回目からはdo-while内のfor文が機能し、j番目の値が新たに決定
+			//				されたinputNumと重複していないかloopFlagで確認し、重複した場合には
+			//				trueに更新され、再度do-while処理が実行される形で重複がチェックされる。）
+			do {
+				loopFlag = false;
+				intputNum = (int) (Math.random() * 10) % 5 + 1;
 
+				for (int j = 0; j < ABkousanArray.length; j++) {
+					if (ABkousanArray[j] == intputNum) {
+						loopFlag = true;
+						break;
+					}
+				}
+
+			} while (loopFlag);
+
+			ABkousanArray[i] = intputNum;
+		}
 
 		System.out.println("E主任：");
 		System.out.println("AB興産の荷物の検査結果を教えてください。\n");
@@ -49,9 +69,14 @@ public class WarehouseManager {
 		System.out.println("Yさん：");
 		System.out.println("はい、");
 
-
 		//ここに要素の確認および何袋目かの出力処理を記述する
-
+		//★for文でローラー
+		for (int i = 0; i < ABkousanArray.length; i++) {
+			if (ABkousanArray[i] == 5) {
+				System.out.println((i + 1) + "袋目");
+				break;
+			}
+		}
 
 		System.out.println("に入っていました。");
 
