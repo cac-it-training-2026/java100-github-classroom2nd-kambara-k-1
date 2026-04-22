@@ -54,23 +54,63 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 //ここにAlphalianクラスを記述する
+class Alphalian {
 
-public class Astronaut {
+	String AlphalianName;
 
-    public static void main(String[] args) throws IOException {
+	public Alphalian() {
+		String[] AlphalianNameArray = { "A", "B", "C", "D", "E" };
+		int AlphalianNameNum = (int) (Math.random() * 10) % 5;
+		this.AlphalianName = AlphalianNameArray[AlphalianNameNum];
+	}
 
-        boolean hitFlag = false;
+	/**
+	 * @return alphalianName
+	 */
+	public String getAlphalianName() {
+		return AlphalianName;
+	}
 
+	/**
+	 * @param alphalianName
+	 *            セットする alphalianName
+	 */
+	public void setAlphalianName(String alphalianName) {
+		AlphalianName = alphalianName;
+	}
 
-        //ここに適切な処理を記述する。
+	public class Astronaut {
 
+		public static void main(String[] args) throws IOException {
 
-        if (hitFlag) {
-            System.out.println("当たったアルファ。α星にようこそアルファ。");
-        } else {
-            System.out.println("って言うか、お前やる気ないアルファ！");
-            System.out.println("とっとと出て行けアルファ！");
-        }
-    }
+			boolean hitFlag = false;
+			//ここに適切な処理を記述する。
+			//【思考メモ】無作為に抽出された10人のα星人のため、10人目まで繰り返し名前を当てる。
+			//			　α星人クラスにてランダムに名前を決め、オブジェクト化し入力内容と比較。
+			//			　1人でも当てはまればよく、その場合は処理を抜ける。
 
+			for (int i = 0; i < 10; i++) {
+				BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+				System.out.println("名前を入れてください（A～E）＞\n");
+				String enteredName = br.readLine();
+
+				System.out.println("α星人：" + (i + 1) + "人目");
+				Alphalian name = new Alphalian();
+				String alphalianName = name.getAlphalianName();
+				if (alphalianName == enteredName) {
+					hitFlag = true;
+					break;
+				} else {
+					System.out.println("おら、そんな名前じゃないアルファ！");
+					System.out.println(alphalianName + "が正解だアルファ！");
+				}
+			}
+			if (hitFlag) {
+				System.out.println("当たったアルファ。α星にようこそアルファ。");
+			} else {
+				System.out.println("って言うか、お前やる気ないアルファ！");
+				System.out.println("とっとと出て行けアルファ！");
+			}
+		}
+	}
 }
