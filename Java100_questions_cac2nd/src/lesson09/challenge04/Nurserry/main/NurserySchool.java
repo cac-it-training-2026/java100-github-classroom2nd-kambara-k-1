@@ -29,32 +29,41 @@
 
 package lesson09.challenge04.Nurserry.main;
 
+import lesson09.challenge04.Nurserry.Exception.CriticalConditionException;
 import lesson09.challenge04.Nurserry.logic.Nurse;
 import lesson09.challenge04.Nurserry.logic.NurserySchoolChild;
 
 public class NurserySchool {
 
-    public static void main(String[] args) {
+	public static void main(String[] args) throws CriticalConditionException {
 
-        Nurse nurse1 = new Nurse("保育太郎");
-        Nurse nurse2 = new Nurse("保育次郎");
-        Nurse nurse3 = new Nurse("保育三郎");
+		Nurse nurse1 = new Nurse("保育太郎");
+		Nurse nurse2 = new Nurse("保育次郎");
+		Nurse nurse3 = new Nurse("保育三郎");
 
-        System.out.println(nurse1.getName() + "が出勤しました。");
-        System.out.println(nurse2.getName() + "が出勤しました。");
-        System.out.println(nurse3.getName() + "が出勤しました。");
+		System.out.println(nurse1.getName() + "が出勤しました。");
+		System.out.println(nurse2.getName() + "が出勤しました。");
+		System.out.println(nurse3.getName() + "が出勤しました。");
 
-        NurserySchoolChild child1 = new NurserySchoolChild("園児①", 36);
-        NurserySchoolChild child2 = new NurserySchoolChild("園児②", 36);
-        NurserySchoolChild child3 = new NurserySchoolChild("園児③", 38);
+		NurserySchoolChild child1 = new NurserySchoolChild("園児①", 36);
+		NurserySchoolChild child2 = new NurserySchoolChild("園児②", 36);
+		NurserySchoolChild child3 = new NurserySchoolChild("園児③", 38);
 
-        System.out.println(child1.getName() + "が登園しました。");
-        System.out.println(child2.getName() + "が登園しました。");
-        System.out.println(child3.getName() + "が登園しました。");
+		System.out.println(child1.getName() + "が登園しました。");
+		System.out.println(child2.getName() + "が登園しました。");
+		System.out.println(child3.getName() + "が登園しました。");
 
+		//ここに適切な処理を記述
+		//★間違い箇所（開始時は実行メソッドのnurseそれぞれのtakeTemperatureメソッド実行時で
+		//				Nurseクラスが呼び出さる。そこで例外が発生したら呼び出し元である当該
+		//				Mainクラスに戻り、catch処理を行っている。）
+		try {
+			nurse1.takeTemperature(child1);
+			nurse2.takeTemperature(child2);
+			nurse3.takeTemperature(child3);
+		} catch (CriticalConditionException e) {
+			System.out.println("\nすぐに病院に行ってください。");
+		}
 
-        //ここに適切な処理を記述
-
-
-    }
+	}
 }
