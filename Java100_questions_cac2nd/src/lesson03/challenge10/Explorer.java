@@ -75,14 +75,45 @@ package lesson03.challenge10;
 
 public class Explorer {
 
-        public static void main(String[] args) {
+	public static void main(String[] args) {
 
-                System.out.println("隊長：");
-                System.out.println("滝の前に着いたよ！\n");
+		System.out.println("隊長：");
+		System.out.println("滝の前に着いたよ！\n");
 
+		//ここにfor文のネスト、if文を利用した処理を記述する。
+		//★iを時間単位で設定する（ここではiの繰り返し処理）
+		for (int i = 13; i < 24; i++) {
+			//★jを分単位で設定する（ここではjの繰り返し処理）
+			//なお、慣習によりループカウンタの変数名はi,j,kの順で使用
+			for (int j = 0; j < 60; j++) {
+				//★現在時刻は13:30のため、13:00の場合は13:30に変換
+				if (i == 13 && j == 0) {
+					j = 30;
+				}
+				//★終了時刻は16:30のため、16:30にbreak処理をし繰り返し終了
+				if (i == 16 && j == 30) {
+					System.out.println("隊長：");
+					System.out.println("16:30 時間になったよ\n");
+					System.out.println("滝の水流が弱くなりました。\n");
+					System.out.println("やったー！宝物だー！");
+					break;
+				}
+				//★間違い箇所（1分ずつ経過し分単位が15の倍数になれば15分経過したことになる
+				//　　　　　　　ため、15で割って余りが0になれば15分経過したことになる。）
+				if (j % 15 == 0) {
+					System.out.println("隊長：");
+					//★間違い箇所（書式を指定して表示する）
+					//第1引数で書式を指定し、その書式に従って表示したい値を第2引数に指定することで、
+					//第2引数の値を第1引数で指定された文字列中で1番目に記述された書式つき文字列に従って変換され出力。
+					//また、第3引数の値は2番目に記述された書式つき文字列に従って変換され出力。
+					System.out.printf("%d:%02d 待ち遠しいな～%n%n", i, j);
+				}
+			}
+			//★iの繰り返し処理について、i=16になった時に抜け出す処理が必要。
+			if (i == 16) {
+				break;
+			}
+		}
 
-                //ここにfor文のネスト、if文を利用した処理を記述する。
-
-
-        }
+	}
 }

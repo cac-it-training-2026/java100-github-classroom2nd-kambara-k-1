@@ -42,9 +42,26 @@ public class WarehouseManager {
 
 		int[] ABKosanArray = new int[5];
 
-
 		//ここに重複チェックおよび値の代入処理を記述する
+		for (int i = 0; i < ABKosanArray.length; i++) {
+			boolean loopFlag = false;
+			int inputNum = 0;
 
+			do {
+				loopFlag = false;
+				inputNum = (int) (Math.random() * 10) % 5 + 1;
+				for (int j = 0; j < ABKosanArray.length; j++) {
+					if (ABKosanArray[j] == inputNum) {
+						loopFlag = true;
+						break;
+					}
+				}
+
+			} while (loopFlag);
+
+			ABKosanArray[i] = inputNum;
+
+		}
 
 		System.out.println("E主任：");
 		System.out.println("AB興産の荷物の並べ替えをお願いします。\n");
@@ -61,9 +78,22 @@ public class WarehouseManager {
 		}
 		System.out.println("\nです。\n");
 
-
 		//ここに昇順にソートする処理を記述する
-
+		//★Arrays.sort(ABKosanArray);
+		//★間違い箇所（i番目とj番目(iの次値)の値を比較し、i番目の値が大きければ一度tempに代入
+		//				し、i番目にj番目の値を代入及び、j番目にtempを代入する。つまり、ここで
+		//				i番目とj番目を入れ替えている、昇順のバブルソートである。）
+		//★間違い箇所（length - 1とする理由は、次番の値と入れ替える際、jの最終値-1をする必要があるため。）
+		//★間違い箇所（初期値をj = i + 1とする理由は、次番の値と入れ替えるため。）
+		for (int i = 0; i < ABKosanArray.length - 1; i++) {
+			for (int j = i + 1; j < ABKosanArray.length; j++) {
+				if (ABKosanArray[i] > ABKosanArray[j]) {
+					int temp = ABKosanArray[i];
+					ABKosanArray[i] = ABKosanArray[j];
+					ABKosanArray[j] = temp;
+				}
+			}
+		}
 
 		System.out.println("小さい順に並べ替えた後の状態は、");
 		for (int i = 0; i < ABKosanArray.length; i++) {
@@ -74,9 +104,16 @@ public class WarehouseManager {
 		}
 		System.out.println("\nです。\n");
 
-
 		//ここに降順にソートする処理を記述する
-
+		for (int i = 0; i < ABKosanArray.length - 1; i++) {
+			for (int j = i + 1; j < ABKosanArray.length; j++) {
+				if (ABKosanArray[i] < ABKosanArray[j]) {
+					int temp = ABKosanArray[i];
+					ABKosanArray[i] = ABKosanArray[j];
+					ABKosanArray[j] = temp;
+				}
+			}
+		}
 
 		System.out.println("大きい順に並べ替えた後の状態は、");
 		for (int i = 0; i < ABKosanArray.length; i++) {

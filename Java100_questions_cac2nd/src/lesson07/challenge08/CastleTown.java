@@ -34,48 +34,84 @@ package lesson07.challenge08;
 
 class Samurai {
 
-    protected String name;
+	protected String name;
 
-    void fight() {
-        System.out.println("戦うよ～。");
-    }
+	void fight() {
+		System.out.println("戦うよ～。");
+	}
 
-    void work() {
-        System.out.println("何かして働くよ～");
-    }
+	void work() {
+		System.out.println("何かして働くよ～");
+	}
 
 }
 
-
 //ここにRetainerクラスを記述
+class Retainer extends Samurai {
 
+	protected String domain;
+
+	void getPaid() {
+		System.out.println("給料をもらうよ～。");
+	}
+
+	void work() {
+		System.out.println("年貢を取り立てるよ～。");
+	}
+
+	public Retainer(String domain, String name) {
+		this.name = name;
+		this.domain = domain;
+	}
+
+	public boolean equals(Object object) {
+		//★objectにはRetainerオブジェクトの参照値が渡されているが、中身はRetainerでも
+		//	変数の型がObjectのため、コンパイル時にObjectとしてしか扱えずRetainerのメンバー
+		//	は参照できない。domainを仕様するにはキャストが必要。
+		Retainer retainer = (Retainer) object;
+		return this.domain.equals(retainer.domain);
+	}
+
+	//★sysoutは実際には、System.out.println(オブジェクト変数名.toString());
+	//　つまり、toString() をオーバーライドすればその内容を表示できる。
+	public String toString() {
+		return "拙者は" + domain + "藩士、" + name + "ともうす。";
+	}
+}
 
 public class CastleTown {
 
-    public static void main(String[] args) {
-        System.out.println("○△□藩の藩士を二つ作ります。\n");
+	public static void main(String[] args) {
+		System.out.println("○△□藩の藩士を二つ作ります。\n");
 
+		//ここに適切な処理を記述
+		Retainer retainer1 = new Retainer("○△□", "テスト太郎");
+		Retainer retainer2 = new Retainer("○△□", "テスト次郎");
+		System.out.println(retainer1);
+		System.out.println(retainer2);
 
-        //ここに適切な処理を記述
+		System.out.println("\n同じ藩に所属しているか確認します。\n");
 
+		//ここに適切な処理を記述
+		if (retainer1.equals(retainer2)) {
+			System.out.println("【同じ藩に所属しています】");
+		} else {
+			System.out.println("【同じ藩に所属していません】");
+		}
 
-        System.out.println("\n同じ藩に所属しているか確認します。\n");
+		System.out.println("\n○△×藩の藩士を一つ作ります。\n");
 
+		//ここに適切な処理を記述
+		Retainer retainer3 = new Retainer("○△×", "テスト三郎");
+		System.out.println(retainer3);
+		System.out.println("\n同じ藩に所属しているか確認します。\n");
 
-        //ここに適切な処理を記述
+		//ここに適切な処理を記述
+		if (retainer1.equals(retainer3)) {
+			System.out.println("【同じ藩に所属しています】");
+		} else {
+			System.out.println("【同じ藩に所属していません】");
+		}
 
-
-        System.out.println("\n○△×藩の藩士を一つ作ります。\n");
-
-
-        //ここに適切な処理を記述
-
-
-        System.out.println("\n同じ藩に所属しているか確認します。\n");
-
-
-        //ここに適切な処理を記述
-
-
-    }
+	}
 }

@@ -152,12 +152,79 @@ public class WarehouseManager {
 		int[] jankenArray1 = new int[5];
 		int[] jankenArray2 = new int[5];
 
-
 		//Yさんのコンテナにじゃんけんの手を入れる処理を記述する。
+		//【思考メモ】配列を作成しているため、入力内容(1～3)をint型numにfor文にて配列に入れる。
+		//			　numの値とジャンケンの手を連携させる必要があるため、if文を使用
+		//★間違い箇所（選択肢が3つ存在しそれぞれ2回までしか使用できず、グーチョキパー以外の
+		//				数値が入力された場合も鑑みるとdo-while + loopFlagを使用し、正規の値を
+		//				入力するまで繰り返し処理を行う。つまり3回重複チェックはdo-while構文。）
 
+		int num = 0;
+		boolean loopFlag = false;
+
+		for (int i = 0; i < jankenArray1.length; i++) {
+			do {
+				loopFlag = false;
+				System.out.print("\nコンテナ" + (i + 1)
+						+ "に入れるブロックを選択してください（1.グー、2.チョキ、3.パー）＞");
+				String numStr = br.readLine();
+				num = Integer.parseInt(numStr);
+				if (num != 1 && num != 2 && num != 3) {
+					System.out.println("\nYさん：");
+					System.out.println("え～。そんな手ないよ。");
+					loopFlag = true;
+				} else if ((stoneCount1 == 2) && (num == 1)) {
+					System.out.println("\nYさん：");
+					System.out.println("グーはもう使えません。");
+					loopFlag = true;
+				} else if ((scissorsCount1 == 2) && (num == 2)) {
+					System.out.println("\nYさん：");
+					System.out.println("チョキはもう使えません。");
+					loopFlag = true;
+				} else if ((paperCount1 == 2) && (num == 3)) {
+					System.out.println("\nYさん：");
+					System.out.println("パーはもう使えません。");
+					loopFlag = true;
+				}
+			} while (loopFlag);
+
+			//★間違い箇所（配列に番号を入れ、番号に応じたジャンケンの手の入力回数を増やす。）
+			jankenArray1[i] = num;
+			if (num == 1) {
+				stoneCount1++;
+			} else if (num == 2) {
+				scissorsCount1++;
+			} else {
+				paperCount1++;
+			}
+		}
 
 		//Sさんのコンテナにじゃんけんの手を入れる処理を記述する。（ランダム）
-
+		//【思考メモ】入れるランダム数(1～3)をnumとし、if文で3回重複しないよう配列に入れていく。
+		//			  重複した場合はiを1減らし、繰り返し処理を行う。
+		//			　3回重複チェックを抜けた場合、numに応じてジャンケンカウントを1ずつ増やす。
+		num = 0;
+		for (int i = 0; i < jankenArray2.length; i++) {
+			num = (int) (Math.random() * 10) % 3 + 1;
+			if ((stoneCount2 == 2) && (num == 1)) {
+				i--;
+				continue;
+			} else if ((scissorsCount2 == 2) && (num == 2)) {
+				i--;
+				continue;
+			} else if ((paperCount2 == 2) && (num == 3)) {
+				i--;
+				continue;
+			}
+			jankenArray2[i] = num;
+			if (num == 1) {
+				stoneCount1++;
+			} else if (num == 2) {
+				scissorsCount1++;
+			} else {
+				paperCount1++;
+			}
+		}
 
 		for (int count = 0; count < 5; count++) {
 
@@ -169,15 +236,40 @@ public class WarehouseManager {
 
 			int openNum1 = 0;
 
-
 			//Yさんのどのコンテナをオープンするか入力してもらう処理を記述する。
-
+			//【思考メモ】int型入力処理にてopenNumにコンテナ番号を入力し、配列の添字に代入。
+			//			　既にオープンしたコンテナが入力された場合と、存在しないコンテナが
+			//			　入力された場合を考慮するべく重複チェックが必要となるためdo-while
+			//			　とif文を使用する。
+			do {
+				loopFlag = false;
+				System.out.print("オープンするコンテナを決めてください＞");
+				String openNumStr = br.readLine();
+				openNum1 = Integer.parseInt(openNumStr) - 1;
+				if ((openNum1 < 0 || (openNum1 > 4))) {
+					System.out.println("\nYさん：");
+					System.out.println("え～。そんなコンテナないよ。\n");
+					loopFlag = true;
+				} else if (jankenArray1[openNum1] == 0) {
+					System.out.println("\nYさん：");
+					System.out.println("そのコンテナはもうオープンしちゃったよ。\n");
+					loopFlag = true;
+				}
+			} while (loopFlag);
 
 			int openNum2 = 0;
 
-
 			//Sさんのどのコンテナをオープンするか決定する処理を記述する。（ランダム）
-
+			//【思考メモ】ランダムで決定するため、存在しないコンテナは入力されない。
+			//			　よって、既にオープンしたコンテナが入力された場合のみ、重複
+			//			　チェックとしてdo-while + if文で記述すればよい。
+			do {
+				loopFlag = false;
+				openNum2 = (int) (Math.random() * 10) % 5;
+				if (jankenArray2[openNum2] == 0) {
+					loopFlag = true;
+				}
+			} while (loopFlag);
 
 			System.out.println("\nYさん：");
 			System.out.println("よし、" + (openNum1 + 1) + "番コンテナだ！\n");
@@ -194,10 +286,73 @@ public class WarehouseManager {
 			System.out.println("Sさん：" + handArray[jankenArray2[openNum2] - 1]);
 			System.out.print("で、");
 
-
 			//1回ごとの勝敗判定およびメッセージの出力処理を記述する。
-
-
+			//【思考メモ】パターン分けのためif文で記述。引き分けは配列1=配列2。
+			//			　win, lose, drawのpointが定義されているため、それぞれ
+			//			　処理結果ごとに+1をしていく。
+			//			　Yの1～3からSの手の場合分けをすると効率的。
+			if (jankenArray1[openNum1] == jankenArray2[openNum2]) {
+				System.out.println("引き分けです。\n");
+				System.out.println("Yさん：");
+				System.out.println("おしいな～\n");
+				System.out.println("Sさん：");
+				System.out.println("実質おらの勝ちだべ。\n");
+				drawPoint++;
+				//★間違い箇所（引き分けから単体で判断し、それ以外はelse文以降
+				//				で判断しなければ毎回引き分けを判断する必要がある。）
+			} else {
+				if (jankenArray1[openNum1] == 1) {
+					if (jankenArray2[openNum2] == 2) {
+						System.out.println("Yさんの勝ちです。\n");
+						System.out.println("Yさん：");
+						System.out.println("やった勝ちだ！\n");
+						System.out.println("Sさん：");
+						System.out.println("あー、もうやんだぐなっできた...\n");
+						winPoint++;
+					} else if (jankenArray2[openNum2] == 3) {
+						System.out.println("Sさんの勝ちです。\n");
+						System.out.println("Yさん：");
+						System.out.println("次は勝つぞ！\n");
+						System.out.println("Sさん：");
+						System.out.println("負けるわけねべ！\n");
+						losePoint++;
+					}
+				} else if (jankenArray1[openNum1] == 2) {
+					if (jankenArray2[openNum2] == 1) {
+						System.out.println("Sさんの勝ちです。\n");
+						System.out.println("Yさん：");
+						System.out.println("次は勝つぞ！\n");
+						System.out.println("Sさん：");
+						System.out.println("負けるわけねべ！\n");
+						losePoint++;
+					} else if (jankenArray2[openNum2] == 3) {
+						System.out.println("Yさんの勝ちです。\n");
+						System.out.println("Yさん：");
+						System.out.println("やった勝ちだ！\n");
+						System.out.println("Sさん：");
+						System.out.println("あー、もうやんだぐなっできた...\n");
+						winPoint++;
+					}
+				} else {
+					if (jankenArray2[openNum2] == 1) {
+						System.out.println("Yさんの勝ちです。\n");
+						System.out.println("Yさん：");
+						System.out.println("やった勝ちだ！\n");
+						System.out.println("Sさん：");
+						System.out.println("あー、もうやんだぐなっできた...\n");
+						winPoint++;
+					} else if (jankenArray2[openNum2] == 2) {
+						System.out.println("Sさんの勝ちです。\n");
+						System.out.println("Yさん：");
+						System.out.println("次は勝つぞ！\n");
+						System.out.println("Sさん：");
+						System.out.println("負けるわけねべ！\n");
+						losePoint++;
+					}
+				}
+			}
+			jankenArray1[openNum1] = 0;
+			jankenArray2[openNum2] = 0;
 		}
 
 		System.out.println("審判：");

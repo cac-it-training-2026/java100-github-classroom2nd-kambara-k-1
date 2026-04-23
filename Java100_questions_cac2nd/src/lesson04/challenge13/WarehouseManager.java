@@ -63,32 +63,45 @@ public class WarehouseManager {
 
 	public static void main(String[] args) throws IOException {
 
-
 		//配列の宣言および初期化処理を記述する
-
+		//【思考メモ】挨拶パターンを配列に入れるためString型配列で初期化
+		//★挨拶は英語で「greeting」		
+		String[] greetingArray = { "へい！らっしゃい！！", "何にしますか！今日は活きのいいコハダが入ってますよ", "まいどあり！！またどうぞ" };
 
 		System.out.println("Yさん：");
 		System.out.println("まず、MISAKI○の今の状態を確かめようかな。\n");
 
-
 		//三つのあいさつパターンの出力処理を記述する
-
+		//【思考メモ】挨拶配列を作成したためfor文で繰り返し取り出し出力する
+		for (int i = 0; i < greetingArray.length; i++) {
+			System.out.print("あいさつパターン" + (i + 1) + "...「");
+			System.out.println(greetingArray[i] + "」\n");
+		}
 
 		System.out.println("Yさん：");
 		System.out.println("うわぁ～。どれか変更しよう。\n");
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-
 		//入力処理および入力値の代入処理
+		//【思考メモ】readLineメソッドで①どの挨拶パターンを変更するか選んで入力。②挨拶パターンを入力し、配列変更
+		System.out.print("どのパターンを変更しますか＞");
+		String choiseNumStr = br.readLine();
+		int choiseNum = Integer.parseInt(choiseNumStr) - 1;
 
+		System.out.print("あいさつを吹き込んでください＞");
+		String greeting = br.readLine();
+
+		greetingArray[choiseNum] = greeting;
 
 		System.out.println("\nYさん：");
 		System.out.println("よし。もう一度確かめてみよう。\n");
 
-
 		//三つのあいさつパターンの出力処理を記述する
-
+		for (int i = 0; i < greetingArray.length; i++) {
+			System.out.print("あいさつパターン" + (i + 1) + "...「");
+			System.out.println(greetingArray[i] + "」\n");
+		}
 
 		System.out.println("Yさん：");
 		System.out.println("まあ少しはマシになったかな。");

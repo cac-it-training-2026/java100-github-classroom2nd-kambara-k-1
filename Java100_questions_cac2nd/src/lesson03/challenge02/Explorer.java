@@ -61,9 +61,17 @@ public class Explorer {
 		int targetCans = 50;
 		int inputCans = 0;
 
-
 		//ここにfor文を利用した処理を記述
-
+		for (int i = 3; i > 0; i--) {
+			System.out.println("隊長：");
+			System.out.println("あと" + i + "回！");
+			System.out.println("\n袋に何個入れますか？＞");
+			String numstr = br.readLine();
+			inputCans += Integer.parseInt(numstr);
+			//ここ間違えた(intを付けると再定義となってしまうため、更新の場合は変数名のみにする)
+			//「新しい変数を宣言しようとしている」とプログラムが誤解したり、「同名の変数を再定義している」とエラーになる
+			//「変数宣言」と「再代入」の区別によるもの
+		}
 
 		if (inputCans >= targetCans) {
 			System.out.println("\n隊長：");
